@@ -1,0 +1,12 @@
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\bin\Debug\net5.0\Parcial_Biblioteca.deps.json
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\bin\Debug\net5.0\Parcial_Biblioteca.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\bin\Debug\net5.0\Parcial_Biblioteca.pdb
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.csproj.AssemblyReference.cache
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.AssemblyInfoInputs.cache
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.AssemblyInfo.cs
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.csproj.CoreCompileInputs.cache
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\refint\Parcial_Biblioteca.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\Parcial_Biblioteca.pdb
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Biblioteca\obj\Debug\net5.0\ref\Parcial_Biblioteca.dll
