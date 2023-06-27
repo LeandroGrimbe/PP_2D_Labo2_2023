@@ -45,11 +45,6 @@
             lblProductos = new System.Windows.Forms.Label();
             lblTituloVentas = new System.Windows.Forms.Label();
             dgvListaProductos = new System.Windows.Forms.DataGridView();
-            Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tag = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            caracteristica = new System.Windows.Forms.DataGridViewTextBoxColumn();
             txtSubtotalCarrito = new System.Windows.Forms.TextBox();
             lblSubtotalCarrito = new System.Windows.Forms.Label();
             botonFinalizarVenta = new System.Windows.Forms.Button();
@@ -73,6 +68,11 @@
             nudListaProductos = new System.Windows.Forms.NumericUpDown();
             cbProductos = new System.Windows.Forms.ComboBox();
             lblBuscarProductos = new System.Windows.Forms.Label();
+            Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Detalles = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             pUsuario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogoUsuario).BeginInit();
@@ -205,7 +205,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             dgvListaProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvListaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvListaProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Nombre, Tag, Stock, Precio, caracteristica });
+            dgvListaProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Nombre, Categoria, Stock, Precio, Detalles });
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -241,42 +241,6 @@
             dgvListaProductos.Size = new System.Drawing.Size(668, 389);
             dgvListaProductos.TabIndex = 34;
             dgvListaProductos.TabStop = false;
-            // 
-            // Nombre
-            // 
-            Nombre.FillWeight = 185F;
-            Nombre.HeaderText = "Nombre";
-            Nombre.Name = "Nombre";
-            Nombre.ReadOnly = true;
-            // 
-            // Tag
-            // 
-            Tag.FillWeight = 90F;
-            Tag.HeaderText = "Categoria";
-            Tag.Name = "Tag";
-            Tag.ReadOnly = true;
-            // 
-            // Stock
-            // 
-            Stock.FillWeight = 65F;
-            Stock.HeaderText = "Cantidad Disponible";
-            Stock.Name = "Stock";
-            Stock.ReadOnly = true;
-            // 
-            // Precio
-            // 
-            Precio.FillWeight = 70F;
-            Precio.HeaderText = "Precio (x Kg)";
-            Precio.Name = "Precio";
-            Precio.ReadOnly = true;
-            // 
-            // caracteristica
-            // 
-            caracteristica.FillWeight = 110F;
-            caracteristica.HeaderText = "Detalles";
-            caracteristica.Name = "caracteristica";
-            caracteristica.ReadOnly = true;
-            caracteristica.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // txtSubtotalCarrito
             // 
@@ -527,6 +491,42 @@
             lblBuscarProductos.TabIndex = 78;
             lblBuscarProductos.Text = "Buscar Producto";
             // 
+            // Nombre
+            // 
+            Nombre.FillWeight = 185F;
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
+            // 
+            // Categoria
+            // 
+            Categoria.FillWeight = 90F;
+            Categoria.HeaderText = "Categoria";
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            // 
+            // Stock
+            // 
+            Stock.FillWeight = 65F;
+            Stock.HeaderText = "Cantidad Disponible";
+            Stock.Name = "Stock";
+            Stock.ReadOnly = true;
+            // 
+            // Precio
+            // 
+            Precio.FillWeight = 70F;
+            Precio.HeaderText = "Precio (x Kg)";
+            Precio.Name = "Precio";
+            Precio.ReadOnly = true;
+            // 
+            // Detalles
+            // 
+            Detalles.FillWeight = 110F;
+            Detalles.HeaderText = "Detalles";
+            Detalles.Name = "Detalles";
+            Detalles.ReadOnly = true;
+            Detalles.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
             // FormVenta
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -584,7 +584,6 @@
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.Panel pUsuario;
         private System.Windows.Forms.PictureBox pbLogoUsuario;
-        private System.Windows.Forms.Label lblSaldoCliente;
         private System.Windows.Forms.Label lblNombreVendedor;
         private System.Windows.Forms.Label lblCerrarSesion;
         private System.Windows.Forms.ComboBox cbFiltros;
@@ -592,11 +591,6 @@
         private System.Windows.Forms.Label lblProductos;
         private System.Windows.Forms.Label lblTituloVentas;
         private System.Windows.Forms.DataGridView dgvListaProductos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Stock;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn caracteristica;
         private System.Windows.Forms.TextBox txtSubtotalCarrito;
         private System.Windows.Forms.Label lblSubtotalCarrito;
         private System.Windows.Forms.Button botonFinalizarVenta;
@@ -620,5 +614,10 @@
         private System.Windows.Forms.NumericUpDown nudListaProductos;
         private System.Windows.Forms.ComboBox cbProductos;
         private System.Windows.Forms.Label lblBuscarProductos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Categoria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Stock;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Detalles;
     }
 }

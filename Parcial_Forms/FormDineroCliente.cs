@@ -46,7 +46,9 @@ namespace Parcial_Forms
         /// <param name="e"></param>
         private void botonDinero_Click(object sender, EventArgs e)
         {
-            double dinero = Validador.ValidarDouble(txtDinero.Text);
+            double dinero;
+            double.TryParse(txtDinero.Text, out dinero);
+
             if (dinero > 0)
             {
                 cliente.DineroDisponible = (decimal)dinero;

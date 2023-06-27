@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Parcial_Biblioteca
 {
-    public class Vendedor : Usuario
+    public class Vendedor : Usuario, IRealizarOperacion
     {
-        private string[] listaClientes;
+        public List<Cliente> listaClientes;
 
-        public static Dictionary<string, string> historialOperaciones;
         public static int numeroOperacion;
 
         #region propiedades
+
+        public override int IdUsuario
+        {
+            get { return this.idUsuario; }
+        }
 
         public override string NombreUsuario
         {
@@ -36,37 +41,15 @@ namespace Parcial_Biblioteca
             get { return this.rolUsuario; }
         }
 
-        public string[] ListaClientes
-        {
-            get { return this.listaClientes; }
-        }
-
         #endregion 
-
+        
         public Vendedor() : base()
         {
-            listaClientes = new string[4];
         }
 
-        /// <summary>
-        /// Instancia un vendedor y hardcodea sus datos
-        /// </summary>
-        /// <returns></returns> Retorna el vendedor instanciado
-        public static Usuario CrearVendedor()
+        public Vendedor(int idUsuario, string nombreUsuario, string eMailUsuario, string claveUsuario, string rolUsuario) : base(idUsuario, nombreUsuario, eMailUsuario, claveUsuario, rolUsuario)
         {
-            Vendedor vendedor = new Vendedor();
-
-            vendedor.nombreUsuario = "Federico Perez";
-            vendedor.eMailUsuario = "perezfederico03@gmail.com";
-            vendedor.claveUsuario = "MilangaDePollo306";
-            vendedor.rolUsuario = "Vendedor";
-
-            vendedor.listaClientes[0] = "Martin Cauteruccio";
-            vendedor.listaClientes[1] = "Sofia Fernandez";
-            vendedor.listaClientes[2] = "Leandro Gomez";
-            vendedor.listaClientes[3] = "Agustina Caceres";
-
-            return vendedor;
+            listaClientes = new List<Cliente>();
         }
 
         /// <summary>
@@ -85,30 +68,33 @@ namespace Parcial_Biblioteca
         }
 
         /// <summary>
-        /// Genera un mensaje luego de confirmarse la venta
+        /// Checkea si el cliente elegido posee dinero suficiente para realizar la venta. Si se cancela la venta se reingresa el stock del carrito a la lista de productos
         /// </summary>
         /// <param name="cliente"></param> cliente al que se le vendio
-        /// <returns></returns> retorna el mensaje
-        public static string RealizarVenta(string cliente)
+        /// <param name="carrito"></param> carrito de productos a vender
+        /// <param name="productos"></param> productos disponibles
+        /// <param name="montoVenta"></param> Monto total de la venta
+        /// <returns></returns> retorna true si se realizo la venta, caso contrario false
+        public bool FinalizarOperacion(Cliente cliente, List<Producto> carrito, List<Producto> productos, decimal montoVenta)
         {
-            StringBuilder sb = new StringBuilder();
+            bool ventaConfirmada = false;
 
-            sb.Append("Venta realizada correctamente al cliente: ");
-            sb.AppendLine(cliente);
-            sb.AppendLine("Generando Factura...");
+            if (cliente.CheckearSaldo(montoVenta))
+            {
+                cliente.DineroDisponible -= montoVenta;
 
-            return sb.ToString();
-        }
+                Programador.ActualizarProductosVentaBDD(carrito, productos);
+                Programador.ActualizarClienteBDD(cliente);
 
-        /// <summary>
-        /// Luego de confirmarse la venta, se guarda el cliente y la lista de los productos que compro en un diccionario. Ademas se incrementa el numero de operacion
-        /// </summary>
-        /// <param name="productosVendidos"></param> lista de productos vendidos
-        /// <param name="cliente"></param> cliente al que se le vendio
-        public static void RegistrarNuevaVenta(string productosVendidos, string cliente)
-        {
-            Vendedor.historialOperaciones.Add(productosVendidos, cliente);
-            Vendedor.numeroOperacion++;
+                ventaConfirmada = true;
+            }
+            else
+            {
+                Producto.DevolverStockCarrito(carrito, productos);
+                carrito.Clear();
+            }
+
+            return ventaConfirmada;
         }
 
         /// <summary>
@@ -126,6 +112,7 @@ namespace Parcial_Biblioteca
             StringBuilder mensajeError = new StringBuilder();
             mensajeError.AppendLine("ERROR, se presentaron los siguientes problemas al cargar el nuevo producto:");
 
+            int idCategoria = 0;
             string mensajeFinal = "";
 
             bool categoriaCorrecta = false;
@@ -146,22 +133,27 @@ namespace Parcial_Biblioteca
             }
             else
             {
+                categoriaProducto = categoria.TransformarAEnum();
                 switch (categoria)
                 {
                     case "Carne_Vacuna":
                         categoriaProducto = ECategoria.Carne_Vacuna;
+                        idCategoria = 1;
                         break;
 
                     case "Pollo":
                         categoriaProducto = ECategoria.Pollo;
+                        idCategoria = 2;
                         break;
 
                     case "Cerdo":
                         categoriaProducto = ECategoria.Cerdo;
+                        idCategoria = 3;
                         break;
 
                     case "Achuras":
                         categoriaProducto = ECategoria.Achuras;
+                        idCategoria = 4;
                         break;
                 }
 
@@ -217,8 +209,10 @@ namespace Parcial_Biblioteca
 
                 if (!productoEncontrado)
                 {
-                    Producto productoNuevo = new Producto(categoriaProducto, corte, precio, cantidadProducto, detalles);
+                    Producto productoNuevo = new Producto(Programador.ultimoIdRegistrado+1, categoriaProducto, corte, precio, cantidadProducto, detalles);
                     listaProductos.Add(productoNuevo);
+                    Programador.CrearProductoBDD(productoNuevo, idCategoria);
+                    Programador.ultimoIdRegistrado++;
 
                     mensajeFinal = "Producto Agregado con Exito";
                 }
@@ -241,6 +235,12 @@ namespace Parcial_Biblioteca
         /// <returns></returns> retorna el mensaje de informe
         public static string EditarProducto(Producto producto, string categoria, string cantidad, string precioPorKilo, string detalles)
         {
+            bool cambioCategoria = false;
+            int idCategoriaNueva = 0;
+            bool cambioCantidad = false;
+            bool cambioPrecio = false;
+            bool cambioDetalles = false;
+
             StringBuilder mensaje = new StringBuilder();
             mensaje.AppendLine("Informe de la Edicion:\n");
 
@@ -253,21 +253,26 @@ namespace Parcial_Biblioteca
                 {
                     case "Carne_Vacuna":
                         producto.Categoria = ECategoria.Carne_Vacuna;
+                        idCategoriaNueva = 1;
                         break;
 
                     case "Pollo":
                         producto.Categoria = ECategoria.Pollo;
+                        idCategoriaNueva = 2;
                         break;
 
                     case "Cerdo":
                         producto.Categoria = ECategoria.Cerdo;
+                        idCategoriaNueva = 3;
                         break;
 
                     case "Achuras":
                         producto.Categoria = ECategoria.Achuras;
+                        idCategoriaNueva = 4;
                         break;
                 }
 
+                cambioCategoria = true;
                 mensaje.AppendLine("-Categoria cambiada con exito");
             }
 
@@ -276,6 +281,7 @@ namespace Parcial_Biblioteca
                 if (decimal.TryParse(cantidad, out cantidadProducto) && cantidadProducto > 0)
                 {
                     producto.CantidadKilos = cantidadProducto;
+                    cambioCantidad = true;
                     mensaje.AppendLine("-Cantidad cambiada con exito");
                 }
                 else
@@ -287,6 +293,7 @@ namespace Parcial_Biblioteca
                 if (double.TryParse(precioPorKilo, out precio) && precio > 0)
                 {
                     producto.PrecioPorKilo = precio;
+                    cambioPrecio = true;
                     mensaje.AppendLine("-Precio cambiado con exito");
                 }
                 else
@@ -296,10 +303,35 @@ namespace Parcial_Biblioteca
             if (!string.IsNullOrEmpty(detalles))
             {
                 producto.Descripcion = detalles;
+                cambioDetalles = true;
                 mensaje.AppendLine("-Detalles cambiados con exito");
             }
 
+            Programador.ModificarProductoBDD(producto, cambioCategoria, idCategoriaNueva, cambioCantidad, cambioPrecio, cambioDetalles);
+            
             return mensaje.ToString();
+        }
+
+        /// <summary>
+        /// Borro un producto de la lista de productos
+        /// </summary>
+        /// <param name="producto"></param>
+        /// <param name="listaProductos"></param>
+        /// <returns></returns> Devuelve el id del producto eliminado
+        public static int BorrarProducto(string producto, List<Producto> listaProductos)
+        {
+            int idProductoABorrar = 0;
+            foreach(Producto p in listaProductos)
+            {
+                if(p == producto)
+                {
+                    idProductoABorrar = p.IdProducto;
+                    listaProductos.Remove(p);
+                    break;
+                }
+            }
+
+            return idProductoABorrar;
         }
     }
 }

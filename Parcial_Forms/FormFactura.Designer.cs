@@ -40,6 +40,8 @@
             Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
             txtCliente = new System.Windows.Forms.TextBox();
+            txtMetodoPago = new System.Windows.Forms.TextBox();
+            txtTotal = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)pbFactura).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvProductos).BeginInit();
             SuspendLayout();
@@ -166,11 +168,35 @@
             txtCliente.Size = new System.Drawing.Size(116, 24);
             txtCliente.TabIndex = 9;
             // 
+            // txtMetodoPago
+            // 
+            txtMetodoPago.BackColor = System.Drawing.SystemColors.Control;
+            txtMetodoPago.Font = new System.Drawing.Font("Sitka Display", 9.749999F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            txtMetodoPago.ForeColor = System.Drawing.SystemColors.Highlight;
+            txtMetodoPago.Location = new System.Drawing.Point(44, 655);
+            txtMetodoPago.Name = "txtMetodoPago";
+            txtMetodoPago.ReadOnly = true;
+            txtMetodoPago.Size = new System.Drawing.Size(159, 24);
+            txtMetodoPago.TabIndex = 10;
+            // 
+            // txtTotal
+            // 
+            txtTotal.BackColor = System.Drawing.SystemColors.Control;
+            txtTotal.Font = new System.Drawing.Font("Sitka Display", 9.749999F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            txtTotal.ForeColor = System.Drawing.SystemColors.Highlight;
+            txtTotal.Location = new System.Drawing.Point(417, 637);
+            txtTotal.Name = "txtTotal";
+            txtTotal.ReadOnly = true;
+            txtTotal.Size = new System.Drawing.Size(115, 24);
+            txtTotal.TabIndex = 11;
+            // 
             // FormFactura
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(577, 787);
+            Controls.Add(txtTotal);
+            Controls.Add(txtMetodoPago);
             Controls.Add(txtCliente);
             Controls.Add(dgvProductos);
             Controls.Add(lblVenta);
@@ -199,5 +225,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
         private System.Windows.Forms.DataGridViewTextBoxColumn Total;
         private System.Windows.Forms.TextBox txtCliente;
+        private System.Windows.Forms.TextBox txtMetodoPago;
+        private System.Windows.Forms.TextBox txtTotal;
     }
 }

@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace Parcial_Biblioteca
 {
+    public delegate void DelegadoAviso(string mensaje);
+
     public class Producto
     {
+        public event DelegadoAviso EventoSinStock;
+
+        private int idProducto;
         private ECategoria categoria;
         private string tipo;
         private decimal cantidadKilos;
@@ -16,6 +21,16 @@ namespace Parcial_Biblioteca
         private string descripcion;
 
         #region propiedades
+
+        public int IdProducto
+        {
+            get { return idProducto; }
+            set
+            {
+                if (value > 0)
+                    idProducto = value;
+            }
+        }
 
         public ECategoria Categoria
         {
@@ -39,11 +54,15 @@ namespace Parcial_Biblioteca
 
         public decimal CantidadKilos
         {
-            get { return cantidadKilos; }
-            set
-            {
-                if (value > 0)
-                    cantidadKilos = value;
+            get { return cantidadKilos; } 
+            set 
+            { 
+                if(value >= 0)
+                    cantidadKilos = value; 
+                if (value == 0)
+                {
+                    EventoSinStock.Invoke("Sin Stock del producto: " + this.tipo);
+                }
             }
         }
 
@@ -54,36 +73,18 @@ namespace Parcial_Biblioteca
 
         #endregion
 
-        public Producto(ECategoria categoria, string tipo, double precioPorKilo, decimal cantidadKilos, string descripcion)
+        public Producto()
         {
+        }
+
+        public Producto(int idProducto, ECategoria categoria, string tipo, double precioPorKilo, decimal cantidadKilos, string descripcion)
+        {
+            this.idProducto = idProducto;
             this.categoria = categoria;
             this.tipo = tipo;
             this.precioPorKilo = precioPorKilo;
             this.cantidadKilos = cantidadKilos;
             this.descripcion = descripcion;
-        }
-
-        /// <summary>
-        /// Instancia una lista de productos y hardcodea los productos iniciales
-        /// </summary>
-        /// <returns></returns> retorna la instancia de la lista
-        public static List<Producto> ProductosIniciales()
-        {
-            List<Producto> productosIniciales = new List<Producto>();
-
-            Producto producto1 = new Producto(ECategoria.Carne_Vacuna, "Asado", 1700, 20, "Sin hueso");
-            Producto producto2 = new Producto(ECategoria.Carne_Vacuna, "Carne Picada", 2000, 11, "Especial");
-            Producto producto3 = new Producto(ECategoria.Carne_Vacuna, "Roast Beef", 1800, 27, "Sin grasa");
-            Producto producto4 = new Producto(ECategoria.Pollo, "Pechuga", 1500, 8, "Sin piel");
-            Producto producto5 = new Producto(ECategoria.Pollo, "Pata y Muslo", 800, 16, "Con piel");
-
-            productosIniciales.Add(producto1);
-            productosIniciales.Add(producto2);
-            productosIniciales.Add(producto3);
-            productosIniciales.Add(producto4);
-            productosIniciales.Add(producto5);
-
-            return productosIniciales;
         }
 
         /// <summary>
@@ -120,18 +121,18 @@ namespace Parcial_Biblioteca
                 {
                     if (p == producto)
                     {
-                        p.cantidadKilos += cantidadElegida;
+                        p.CantidadKilos += cantidadElegida;
                         productoYaEnCarrito = true;
                     }
                 }
 
                 if (!productoYaEnCarrito)
                 {
-                    Producto productoAux = new Producto(producto.categoria, producto.tipo, producto.precioPorKilo, cantidadElegida, producto.descripcion);
+                    Producto productoAux = new Producto(producto.idProducto, producto.categoria, producto.tipo, producto.precioPorKilo, cantidadElegida, producto.descripcion);
                     listaCarrito.Add(productoAux);
                 }
 
-                producto.cantidadKilos -= cantidadElegida;
+                producto.CantidadKilos -= cantidadElegida;
             }
         }
 

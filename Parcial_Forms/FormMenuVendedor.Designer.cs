@@ -36,15 +36,12 @@
             pbVentas = new System.Windows.Forms.PictureBox();
             pbLogo = new System.Windows.Forms.PictureBox();
             pbInventario = new System.Windows.Forms.PictureBox();
-            pbHistorial = new System.Windows.Forms.PictureBox();
-            botonHistorial = new System.Windows.Forms.Button();
             botonVentas = new System.Windows.Forms.Button();
             botonInventario = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)pbVolver).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbVentas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbInventario).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pbHistorial).BeginInit();
             SuspendLayout();
             // 
             // lblVolver
@@ -133,30 +130,6 @@
             pbInventario.TabIndex = 18;
             pbInventario.TabStop = false;
             // 
-            // pbHistorial
-            // 
-            pbHistorial.Image = Properties.Resources.Icono_historial;
-            pbHistorial.Location = new System.Drawing.Point(55, 356);
-            pbHistorial.Name = "pbHistorial";
-            pbHistorial.Size = new System.Drawing.Size(61, 65);
-            pbHistorial.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            pbHistorial.TabIndex = 19;
-            pbHistorial.TabStop = false;
-            // 
-            // botonHistorial
-            // 
-            botonHistorial.BackColor = System.Drawing.Color.Beige;
-            botonHistorial.Cursor = System.Windows.Forms.Cursors.Hand;
-            botonHistorial.Font = new System.Drawing.Font("MV Boli", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            botonHistorial.Location = new System.Drawing.Point(126, 361);
-            botonHistorial.Name = "botonHistorial";
-            botonHistorial.Size = new System.Drawing.Size(356, 52);
-            botonHistorial.TabIndex = 22;
-            botonHistorial.TabStop = false;
-            botonHistorial.Text = "Administrar Historial de Ventas";
-            botonHistorial.UseVisualStyleBackColor = false;
-            botonHistorial.Click += botonHistorial_Click;
-            // 
             // botonVentas
             // 
             botonVentas.BackColor = System.Drawing.Color.Beige;
@@ -191,11 +164,9 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Honeydew;
-            ClientSize = new System.Drawing.Size(534, 438);
-            Controls.Add(botonHistorial);
+            ClientSize = new System.Drawing.Size(534, 363);
             Controls.Add(botonVentas);
             Controls.Add(botonInventario);
-            Controls.Add(pbHistorial);
             Controls.Add(pbInventario);
             Controls.Add(lblVolver);
             Controls.Add(pbVolver);
@@ -213,7 +184,6 @@
             ((System.ComponentModel.ISupportInitialize)pbVentas).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbInventario).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pbHistorial).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -222,15 +192,12 @@
 
         private System.Windows.Forms.Label lblVolver;
         private System.Windows.Forms.PictureBox pbVolver;
-        private System.Windows.Forms.Button botonDinero;
         private System.Windows.Forms.Label lblMensajeOpcion;
         private System.Windows.Forms.Label lblNombreVendedor;
         private System.Windows.Forms.Label lblSaludo;
         private System.Windows.Forms.PictureBox pbVentas;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.PictureBox pbInventario;
-        private System.Windows.Forms.PictureBox pbHistorial;
-        private System.Windows.Forms.Button botonHistorial;
         private System.Windows.Forms.Button botonVentas;
         private System.Windows.Forms.Button botonInventario;
     }

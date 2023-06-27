@@ -133,6 +133,9 @@
   <data name="icono cesto" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icono cesto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Icono historial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono historial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Icono musica prendida" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icono musica prendida.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -178,7 +181,7 @@
   <data name="asado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\asado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Icono historial" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icono historial.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Icono borrar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Icono borrar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

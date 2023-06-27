@@ -15,19 +15,12 @@ namespace Parcial_Forms
         [STAThread]
         static void Main()
         {
-            Usuario cliente1 = Cliente.CrearCliente(1);
-            Usuario cliente2 = Cliente.CrearCliente(2);
-            Usuario vendedor = Vendedor.CrearVendedor();
-
-            List<Producto> listaProductos = Producto.ProductosIniciales();
-
             Vendedor.numeroOperacion = 1;
-            Vendedor.historialOperaciones = new Dictionary<string, string>();
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormLogin(cliente1, cliente2, vendedor, listaProductos));
+            Application.Run(new FormLogin());
         }
     }
 }

@@ -15,11 +15,6 @@ namespace Parcial_Forms
 {
     public partial class FormLogin : Form
     {
-
-        private Usuario cliente1;
-        private Usuario cliente2;
-        private Usuario vendedor;
-
         private List<Producto> listaProductos;
 
         private System.Media.SoundPlayer player;
@@ -29,23 +24,51 @@ namespace Parcial_Forms
         public FormLogin()
         {
             InitializeComponent();
+            this.listaProductos = new List<Producto>();
         }
 
-        /// <summary> 
-        /// Inicializo los atributos con los parametros, utilizo funciones propias para quitarle el fondo a los label y el boton, para asi coincidir con la imagen de fondo, y activo el reproductor de musica.
-        /// 
+        #endregion
+
+        #region Otras Funciones
+
+        /// <summary>
+        /// Utilizo hilos para cargar todas las cosas del forms mas rapidamente.
         /// </summary>
-        /// <param name="cliente1"></param>
-        /// <param name="cliente2"></param>
-        /// <param name="vendedor"></param>
-        public FormLogin(Usuario cliente1, Usuario cliente2, Usuario vendedor, List<Producto> listaProductos) : this()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FormLogin_Load(object sender, EventArgs e)
         {
-            this.cliente1 = cliente1;
-            this.cliente2 = cliente2;
-            this.vendedor = vendedor;
+            Task t1 = new Task(CargaLista);
+            t1.Start();
 
-            this.listaProductos = listaProductos;
+            ParametrosIniciales();
+        }
 
+        /// <summary>
+        /// Traigo los productos cargados en la base de datos, y los agrego a la lista. Ademas, le asigno a cada producto un evento de control de stock.
+        /// </summary>
+        private void CargaLista()
+        {
+            try
+            {
+                Programador.CargarProductosBDD(this.listaProductos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            foreach (Producto p in listaProductos)
+            {
+                p.EventoSinStock += AvisoStock;
+            }
+        }
+
+        /// <summary>
+        /// Utilizo funciones propias para quitarle el fondo a los label y el boton, para asi coincidir con la imagen de fondo, y activo el reproductor de musica.
+        /// </summary>
+        private void ParametrosIniciales()
+        {
             configFondolbl(lblUsuario);
             configFondolbl(lblClave);
             configFondolbl(lblTipoUsuario);
@@ -56,7 +79,6 @@ namespace Parcial_Forms
             player = new System.Media.SoundPlayer();
             player.SoundLocation = "cancion.wav";
             player.PlayLooping();
-
         }
 
         #endregion
@@ -72,53 +94,80 @@ namespace Parcial_Forms
         /// <param name="e"></param>
         private void botonIniciarSesion_Click(object sender, EventArgs e)
         {
-            if (txtUsuario.Text == vendedor.EMailUsuario && txtClave.Text == vendedor.ClaveUsuario)
-            {
-                player.Stop();
-
-                MessageBox.Show(vendedor.MensajeLogin());
-
-                FormMenuVendedor formMenuVendedor = new FormMenuVendedor((Vendedor)vendedor, listaProductos);
-
-                this.Hide();
-
-                if (formMenuVendedor.ShowDialog() == DialogResult.Cancel)
-                {
-                    formMenuVendedor.Dispose();
-                    restablecerParametros();
-                    this.Show();
-                }
-            }
-            else if (txtUsuario.Text == cliente1.EMailUsuario && txtClave.Text == cliente1.ClaveUsuario || txtUsuario.Text == cliente2.EMailUsuario && txtClave.Text == cliente2.ClaveUsuario)
-            {
-                player.Stop();
-
-                FormDineroCliente formCliente;
-
-                if (txtUsuario.Text == cliente1.EMailUsuario)
-                {
-                    MessageBox.Show(cliente1.MensajeLogin());
-                    formCliente = new FormDineroCliente((Cliente)cliente1, listaProductos);
-                }
-                else
-                {
-                    MessageBox.Show(cliente2.MensajeLogin());
-                    formCliente = new FormDineroCliente((Cliente)cliente2, listaProductos);
-                }
-
-                this.Hide();
-
-                if (formCliente.ShowDialog() == DialogResult.Cancel)
-                {
-                    formCliente.Dispose();
-                    restablecerParametros();
-                    this.Show();
-                }
-            }
-            else if (txtUsuario.Text == string.Empty || txtClave.Text == string.Empty)
+            if (string.IsNullOrEmpty(txtUsuario.Text) || string.IsNullOrEmpty(txtClave.Text))
                 MessageBox.Show("Los campos no pueden estar vacios. Reintente.");
+            else if (!txtUsuario.Text.ComprobarFormatoEmail())
+                MessageBox.Show("Formato de email invalido. Reintente.");
             else
-                MessageBox.Show("Usuario o contraseña no valido/a. Reintente.");
+            {
+                string mail = txtUsuario.Text;
+                string clave = txtClave.Text;
+                int tipoUsuario = 0;
+
+                player.Stop();
+
+                try
+                {
+                    Usuario usuario = Programador.BuscarUsuarioBDD(ref tipoUsuario, mail, clave);
+
+                    switch (tipoUsuario)
+                    {
+                        case 1:
+                            MessageBox.Show(usuario.MensajeLogin());
+
+                            FormMenuVendedor formMenuVendedor = new FormMenuVendedor((Vendedor)usuario, listaProductos);
+
+                            this.Hide();
+
+                            if (formMenuVendedor.ShowDialog() == DialogResult.Cancel)
+                            {
+                                formMenuVendedor.Dispose();
+                                restablecerParametros();
+                                this.Show();
+                            }
+                            break;
+
+                        case 2:
+                            MessageBox.Show(usuario.MensajeLogin());
+
+                            FormDineroCliente formCliente = new FormDineroCliente((Cliente)usuario, listaProductos);
+
+                            this.Hide();
+
+                            if (formCliente.ShowDialog() == DialogResult.Cancel)
+                            {
+                                formCliente.Dispose();
+                                restablecerParametros();
+                                this.Show();
+                            }
+                            break;
+
+                        case 3:
+                            MessageBox.Show(usuario.MensajeLogin());
+
+                            FormProgramador formProgramador = new FormProgramador((Programador)usuario, listaProductos);
+
+                            this.Hide();
+
+                            if (formProgramador.ShowDialog() == DialogResult.Cancel)
+                            {
+                                formProgramador.Dispose();
+                                restablecerParametros();
+                                this.Show();
+                            }
+                            break;
+
+                        default:
+                            throw new CuentaNoEncontradaException();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                    restablecerParametros();
+                }
+            }
         }
 
         /// <summary> 
@@ -148,21 +197,21 @@ namespace Parcial_Forms
         /// <param name="e"></param>
         private void cboTiposUsuario_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboTiposUsuario.Text == vendedor.RolUsuario)
+            string mail = "";
+            string clave = "";
+            int idUsuario = cboTiposUsuario.SelectedIndex + 1;
+
+            try
             {
-                txtUsuario.Text = vendedor.EMailUsuario;
-                txtClave.Text = vendedor.ClaveUsuario;
+                Programador.AutoCompletarDatosBDD(idUsuario, ref mail, ref clave);
             }
-            else if (cboTiposUsuario.Text == cliente1.RolUsuario)
+            catch (Exception excepcion)
             {
-                txtUsuario.Text = cliente1.EMailUsuario;
-                txtClave.Text = cliente1.ClaveUsuario;
+                MessageBox.Show(excepcion.Message);
             }
-            else if (cboTiposUsuario.Text == cliente2.RolUsuario)
-            {
-                txtUsuario.Text = cliente2.EMailUsuario;
-                txtClave.Text = cliente2.ClaveUsuario;
-            }
+
+            txtUsuario.Text = mail;
+            txtClave.Text = clave;
         }
 
         /// <summary>
@@ -174,6 +223,11 @@ namespace Parcial_Forms
         private void lblOlvidoDeContraseña_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Gracias, vuelva prontos");
+        }
+
+        private static void AvisoStock(string mensaje)
+        {
+            MessageBox.Show(mensaje);
         }
 
         #endregion

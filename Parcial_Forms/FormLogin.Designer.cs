@@ -135,10 +135,10 @@
             cboTiposUsuario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboTiposUsuario.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             cboTiposUsuario.FormattingEnabled = true;
-            cboTiposUsuario.Items.AddRange(new object[] { "Vendedor", "Cliente1", "Cliente2" });
+            cboTiposUsuario.Items.AddRange(new object[] { "Vendedor", "Cliente1", "Cliente2", "Programador" });
             cboTiposUsuario.Location = new System.Drawing.Point(147, 397);
             cboTiposUsuario.Name = "cboTiposUsuario";
-            cboTiposUsuario.Size = new System.Drawing.Size(91, 25);
+            cboTiposUsuario.Size = new System.Drawing.Size(110, 25);
             cboTiposUsuario.TabIndex = 9;
             cboTiposUsuario.SelectedIndexChanged += cboTiposUsuario_SelectedIndexChanged;
             // 
@@ -229,6 +229,7 @@
             Name = "FormLogin";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "INICIO DE SESION";
+            Load += FormLogin_Load;
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMusicaOn).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMusicaOff).EndInit();

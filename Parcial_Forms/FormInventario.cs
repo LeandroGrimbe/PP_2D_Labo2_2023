@@ -136,12 +136,58 @@ namespace Parcial_Forms
             {
                 if (p == cbProductos.Text)
                 {
-                    MessageBox.Show(Vendedor.EditarProducto(p, cbNuevaCategoria.Text, txtTotalCantidad.Text, txtNuevoPrecio.Text, txtNuevosDetalles.Text));
+                    try
+                    {
+                        MessageBox.Show(Vendedor.EditarProducto(p, cbNuevaCategoria.Text, txtTotalCantidad.Text, txtNuevoPrecio.Text, txtNuevosDetalles.Text));
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
                     break;
                 }
             }
 
             MostrarDatos();
+        }
+
+        /// <summary>
+        /// Elimina el producto seleccionado en el combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pbBotonEliminarProducto_Click(object sender, EventArgs e)
+        {
+            if (cbProductos.SelectedIndex != -1)
+            {
+                if (MessageBox.Show("Esta seguro que desea eliminar este producto?", "Borrar", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    int idABorrar = Vendedor.BorrarProducto(cbProductos.Text, listaProductos);
+
+                    try
+                    {
+                        Programador.BorrarProductoBDD(idABorrar);
+                        MessageBox.Show("Producto borrado con exito", "Borrado", MessageBoxButtons.OK);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    MostrarDatos();
+                }
+                else
+                {
+                    MessageBox.Show("Borrado cancelado");
+                    cbProductos.SelectedIndex = -1;
+                }
+
+                pNuevoProducto.Hide();
+                pEditarProducto.Hide();
+            }
+            else
+                MessageBox.Show("Seleccione un producto");
         }
 
         /// <summary>

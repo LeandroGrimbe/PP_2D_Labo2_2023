@@ -14,6 +14,7 @@ namespace Parcial_Forms
     public partial class FormResumenOperacion : Form
     {
         private Usuario usuario;
+        private Cliente clienteSeleccionado;
 
         private decimal subtotal;
 
@@ -54,13 +55,17 @@ namespace Parcial_Forms
             }
             else if (usuario is Vendedor)
             {
-                cbClientes.DataSource = ((Vendedor)usuario).ListaClientes;
+                foreach (Cliente c in ((Vendedor)usuario).listaClientes)
+                {
+                    if (c is not null)
+                        cbClientes.Items.Add(c.NombreUsuario);
+                }
+                cbClientes.SelectedIndex = -1;
+
                 lblTitulo.Text = "Venta";
                 lblDatosVenta.Text = "Datos de Venta";
                 botonCancelar.Text = "Cancelar Venta";
                 botonConfirmar.Text = "Confirmar Venta";
-                lblSaldoCliente.Hide();
-                txtSaldoCliente.Hide();
                 this.BackColor = Color.Honeydew;
             }
 
@@ -72,8 +77,27 @@ namespace Parcial_Forms
             foreach (Producto p in listaCarrito)
             {
                 if (p is not null)
-                {
                     dgvProductosVenta.Rows.Add(p.Tipo, p.CantidadKilos, p.PrecioPorKilo, (decimal)p.PrecioPorKilo * p.CantidadKilos);
+            }
+        }
+
+        /// <summary>
+        /// Segun el cliente seleccionado en el combobox, se actualiza el campo de saldo disponible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cbClientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (usuario is Vendedor)
+            {
+                foreach (Cliente c in ((Vendedor)usuario).listaClientes)
+                {
+                    if (c.NombreUsuario == cbClientes.Text)
+                    {
+                        clienteSeleccionado = c;
+                        txtSaldoCliente.Text = c.DineroDisponible.ToString();
+                        break;
+                    }
                 }
             }
         }
@@ -103,51 +127,67 @@ namespace Parcial_Forms
                 decimal total;
                 decimal.TryParse(txtTotal.Text, out total);
 
-                if (usuario is Cliente)
+                try
                 {
-                    if (Cliente.RealizarCompra((Cliente)usuario, listaCarrito, listaProductos, total))
+                    if (usuario is Cliente)
                     {
-                        MessageBox.Show("Compra realizada con exito. Generando factura de compra...", "Compra", MessageBoxButtons.OK);
-
-                        this.Hide();
-                        cierreTotal = false;
-
-                        FormFactura formFactura = new FormFactura(usuario.NombreUsuario, listaCarrito, cbMetodoPago.Text);
-                        if (formFactura.ShowDialog() == DialogResult.Cancel)
+                        if (((Cliente)usuario).FinalizarOperacion((Cliente)usuario, listaCarrito, listaProductos, total))
                         {
-                            listaCarrito.Clear();
+                            MessageBox.Show("Compra realizada con exito. Generando factura de compra...", "Compra", MessageBoxButtons.OK);
+
+                            this.Hide();
+                            cierreTotal = false;
+
+                            FormFactura formFactura = new FormFactura(usuario.NombreUsuario, listaCarrito, cbMetodoPago.Text);
+                            if (formFactura.ShowDialog() == DialogResult.Cancel)
+                            {
+                                listaCarrito.Clear();
+                                this.Close();
+                                this.DialogResult = MessageBox.Show("Desea realizar otra compra?", "Cierre", MessageBoxButtons.YesNo);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Saldo Insuficiente, Compra cancelada", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            cierreTotal = false;
                             this.Close();
-                            this.DialogResult = MessageBox.Show("Desea realizar otra compra?", "Cierre", MessageBoxButtons.YesNo);
+                            this.DialogResult = DialogResult.Yes;
                         }
                     }
-                    else
+                    else if (usuario is Vendedor)
                     {
-                        MessageBox.Show("Saldo Insuficiente, venta cancelada", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        cierreTotal = false;
-                        this.Close();
+                        if (cbClientes.SelectedIndex != -1)
+                        {
+                            if (((Vendedor)usuario).FinalizarOperacion(clienteSeleccionado, listaCarrito, listaProductos, total))
+                            {
+                                MessageBox.Show("Venta realizada con exito a " + clienteSeleccionado.NombreUsuario + "\nGenerando factura de Venta...", "Venta", MessageBoxButtons.OK);
+
+                                this.Hide();
+                                cierreTotal = false;
+
+                                FormFactura formFactura = new FormFactura(clienteSeleccionado.NombreUsuario, listaCarrito, cbMetodoPago.Text);
+                                if (formFactura.ShowDialog() == DialogResult.Cancel)
+                                {
+                                    listaCarrito.Clear();
+                                    this.Close();
+                                    this.DialogResult = MessageBox.Show("Desea realizar otra Venta?", "Cierre", MessageBoxButtons.YesNo);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Saldo Insuficiente, venta cancelada", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                cierreTotal = false;
+                                this.Close();
+                                this.DialogResult = DialogResult.Yes;
+                            }
+                        }
+                        else
+                            MessageBox.Show("Cliente vacio o invalido. Reintente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else if (usuario is Vendedor)
+                catch(Exception ex)
                 {
-                    if (cbClientes.SelectedIndex != -1)
-                    {
-                        string mensajeVenta = Vendedor.RealizarVenta(cbClientes.Text);
-
-                        MessageBox.Show(mensajeVenta, "Venta", MessageBoxButtons.OK);
-
-                        this.Hide();
-                        cierreTotal = false;
-
-                        FormFactura formFactura = new FormFactura(cbClientes.Text, listaCarrito, cbMetodoPago.Text);
-                        if (formFactura.ShowDialog() == DialogResult.Cancel)
-                        {
-                            listaCarrito.Clear();
-                            this.Close();
-                            this.DialogResult = MessageBox.Show("Desea realizar otra Venta?", "Cierre", MessageBoxButtons.YesNo);
-                        }
-                    }
-                    else
-                        MessageBox.Show("Cliente vacio o invalido. Reintente", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
@@ -161,7 +201,7 @@ namespace Parcial_Forms
         /// <param name="e"></param>
         private void botonCancelar_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Cancelando Operacion....", "Compra Cancelada", MessageBoxButtons.OK);
+            MessageBox.Show("Cancelando Operacion....", "Operacion Cancelada", MessageBoxButtons.OK);
 
             Producto.DevolverStockCarrito(listaCarrito, listaProductos);
             listaCarrito.Clear();

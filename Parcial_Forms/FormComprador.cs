@@ -51,7 +51,8 @@ namespace Parcial_Forms
             nudListaProductos.DecimalPlaces = 2;
             nudListaProductos.Increment = 0.1M;
 
-            ParametrosIniciales();
+            Task t1 = new Task(ParametrosIniciales);
+            t1.Start();
 
             configFondoLogo(pbProducto1, pbIconoSinStock1);
             configFondoLogo(pbProducto2, pbIconoSinStock2);

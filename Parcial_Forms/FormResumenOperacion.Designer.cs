@@ -316,6 +316,7 @@
             cbClientes.Name = "cbClientes";
             cbClientes.Size = new System.Drawing.Size(320, 31);
             cbClientes.TabIndex = 48;
+            cbClientes.SelectedIndexChanged += cbClientes_SelectedIndexChanged;
             // 
             // FormResumenOperacion
             // 

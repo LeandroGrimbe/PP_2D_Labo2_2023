@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace Parcial_Biblioteca
 {
-    public class Cliente : Usuario
+    public class Cliente : Usuario, IRealizarOperacion
     {
         private decimal dineroDisponible;
 
         #region propiedades
+
+        public override int IdUsuario
+        {
+            get { return this.idUsuario; }
+        }
 
         public decimal DineroDisponible
         {
@@ -44,35 +49,9 @@ namespace Parcial_Biblioteca
 
         #endregion
 
-        /// <summary>
-        /// Crea y hardcodea los datos de 2 clientes distintos
-        /// </summary>
-        /// <param name="numeroCliente"></param> el numero de cliente a hardcodear
-        /// <returns></returns> Devuelve el cliente instanciado
-        public static Usuario CrearCliente(int numeroCliente)
+        public Cliente(int idUsuario, string nombreUsuario, string eMailUsuario, string claveUsuario, string rolUsuario) : base(idUsuario, nombreUsuario, eMailUsuario, claveUsuario, rolUsuario)
         {
-            Cliente cliente = new Cliente();
-
-            switch (numeroCliente)
-            {
-                case 1:
-                    cliente.nombreUsuario = "Jorge Gonzalez";
-                    cliente.eMailUsuario = "gonzalezcabj12@gmail.com";
-                    cliente.claveUsuario = "ElUltimo10";
-                    cliente.rolUsuario = "Cliente1";
-                    break;
-
-                case 2:
-                    cliente.nombreUsuario = "Julian Pereira";
-                    cliente.eMailUsuario = "julipereira@gmail.com";
-                    cliente.claveUsuario = "Panchi230132";
-                    cliente.rolUsuario = "Cliente2";
-                    break;
-            }
-
-            cliente.dineroDisponible = 0;
-
-            return cliente;
+            this.dineroDisponible = 0;
         }
 
         /// <summary>
@@ -115,13 +94,17 @@ namespace Parcial_Biblioteca
         /// <param name="productos"></param> lista principal de productos
         /// <param name="totalCompra"></param> valor de compra
         /// <returns></returns> devuelve si se realizo o no la compra
-        public static bool RealizarCompra(Cliente cliente, List<Producto> carrito, List<Producto> productos, decimal totalCompra)
+        public bool FinalizarOperacion(Cliente cliente, List<Producto> carrito, List<Producto> productos, decimal totalCompra)
         {
             bool compraRealizada = false;
 
             if(cliente.CheckearSaldo(totalCompra))
             {
-                cliente.dineroDisponible -= totalCompra;
+                cliente.DineroDisponible -= totalCompra;
+
+                Programador.ActualizarProductosVentaBDD(carrito, productos);
+                Programador.ActualizarClienteBDD(cliente);
+
                 compraRealizada = true;
             }
             else

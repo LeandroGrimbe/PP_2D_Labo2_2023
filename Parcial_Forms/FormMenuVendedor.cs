@@ -18,6 +18,8 @@ namespace Parcial_Forms
 
         private bool cierreTotal;
 
+        #region constructores
+
         public FormMenuVendedor()
         {
             InitializeComponent();
@@ -31,6 +33,8 @@ namespace Parcial_Forms
 
             lblNombreVendedor.Text = vendedor.NombreUsuario;
         }
+
+        #endregion
 
         /// <summary>
         /// Abre el form de ventas y oculta este form
@@ -70,29 +74,6 @@ namespace Parcial_Forms
             if (formInventario.ShowDialog() == DialogResult.Cancel)
             {
                 formInventario.Dispose();
-                cierreTotal = false;
-                this.Close();
-            }
-            else
-            {
-                this.Show();
-            }
-        }
-
-        /// <summary>
-        /// Abre el form de historial y oculta este form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void botonHistorial_Click(object sender, EventArgs e)
-        {
-            FormHistorial formHistorial = new FormHistorial(vendedor);
-
-            this.Hide();
-
-            if (formHistorial.ShowDialog() == DialogResult.Cancel)
-            {
-                formHistorial.Dispose();
                 cierreTotal = false;
                 this.Close();
             }

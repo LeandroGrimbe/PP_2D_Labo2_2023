@@ -26,5 +26,11 @@ C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-wi
 C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-windows\Parcial_Forms.Properties.Resources.resources
 C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-windows\Parcial_Forms.FormMenuVendedor.resources
 C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-windows\Parcial_Forms.FormVenta.resources
-C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-windows\Parcial_Forms.FormHistorial.resources
 C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-windows\Parcial_Forms.FormInventario.resources
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\bin\Debug\net5.0-windows\System.Data.SqlClient.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\bin\Debug\net5.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\bin\Debug\net5.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\bin\Debug\net5.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\lea\Downloads\Programacion 2\Parcial1\Parcial_Forms\obj\Debug\net5.0-windows\Parcial_Forms.FormProgramador.resources

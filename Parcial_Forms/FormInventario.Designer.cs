@@ -40,10 +40,10 @@
             lblTituloInventario = new System.Windows.Forms.Label();
             dgvListaProductos = new System.Windows.Forms.DataGridView();
             Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Tag = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            caracteristica = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Detalles = new System.Windows.Forms.DataGridViewTextBoxColumn();
             pbLogo = new System.Windows.Forms.PictureBox();
             pbLogoUsuario = new System.Windows.Forms.PictureBox();
             lblNombreVendedor = new System.Windows.Forms.Label();
@@ -52,7 +52,6 @@
             cbFiltros = new System.Windows.Forms.ComboBox();
             lblFiltro = new System.Windows.Forms.Label();
             lblProductos = new System.Windows.Forms.Label();
-            lblCaracteristicaNuevoProducto = new System.Windows.Forms.Label();
             botonAgregarProducto = new System.Windows.Forms.Button();
             lblCategoriaProducto = new System.Windows.Forms.Label();
             cbCategoriasProducto = new System.Windows.Forms.ComboBox();
@@ -90,6 +89,7 @@
             txtPrecioActual = new System.Windows.Forms.TextBox();
             txtCantidadActual = new System.Windows.Forms.TextBox();
             pbBotonEditarProducto = new System.Windows.Forms.PictureBox();
+            pbBotonEliminarProducto = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbBotonVolverMenu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvListaProductos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
@@ -99,6 +99,7 @@
             pNuevoProducto.SuspendLayout();
             pEditarProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbBotonEditarProducto).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbBotonEliminarProducto).BeginInit();
             SuspendLayout();
             // 
             // cbProductos
@@ -178,7 +179,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             dgvListaProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dgvListaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvListaProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Nombre, Tag, Stock, Precio, caracteristica });
+            dgvListaProductos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { Nombre, Categoria, Stock, Precio, Detalles });
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -222,12 +223,12 @@
             Nombre.Name = "Nombre";
             Nombre.ReadOnly = true;
             // 
-            // Tag
+            // Categoria
             // 
-            Tag.FillWeight = 90F;
-            Tag.HeaderText = "Categoria";
-            Tag.Name = "Tag";
-            Tag.ReadOnly = true;
+            Categoria.FillWeight = 90F;
+            Categoria.HeaderText = "Categoria";
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
             // 
             // Stock
             // 
@@ -243,13 +244,13 @@
             Precio.Name = "Precio";
             Precio.ReadOnly = true;
             // 
-            // caracteristica
+            // Detalles
             // 
-            caracteristica.FillWeight = 110F;
-            caracteristica.HeaderText = "Detalles";
-            caracteristica.Name = "caracteristica";
-            caracteristica.ReadOnly = true;
-            caracteristica.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            Detalles.FillWeight = 110F;
+            Detalles.HeaderText = "Detalles";
+            Detalles.Name = "Detalles";
+            Detalles.ReadOnly = true;
+            Detalles.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // pbLogo
             // 
@@ -339,13 +340,6 @@
             lblProductos.Size = new System.Drawing.Size(197, 18);
             lblProductos.TabIndex = 94;
             lblProductos.Text = "Productos disponibles";
-            // 
-            // lblCaracteristicaNuevoProducto
-            // 
-            lblCaracteristicaNuevoProducto.Location = new System.Drawing.Point(0, 0);
-            lblCaracteristicaNuevoProducto.Name = "lblCaracteristicaNuevoProducto";
-            lblCaracteristicaNuevoProducto.Size = new System.Drawing.Size(100, 23);
-            lblCaracteristicaNuevoProducto.TabIndex = 115;
             // 
             // botonAgregarProducto
             // 
@@ -441,7 +435,7 @@
             // 
             lblNuevoProducto.AutoSize = true;
             lblNuevoProducto.Font = new System.Drawing.Font("Unispace", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            lblNuevoProducto.Location = new System.Drawing.Point(1409, 223);
+            lblNuevoProducto.Location = new System.Drawing.Point(1431, 225);
             lblNuevoProducto.Name = "lblNuevoProducto";
             lblNuevoProducto.Size = new System.Drawing.Size(206, 18);
             lblNuevoProducto.TabIndex = 111;
@@ -451,7 +445,7 @@
             // 
             pbBotonNuevoProducto.Cursor = System.Windows.Forms.Cursors.Hand;
             pbBotonNuevoProducto.Image = Properties.Resources.Icono_agregar;
-            pbBotonNuevoProducto.Location = new System.Drawing.Point(1623, 213);
+            pbBotonNuevoProducto.Location = new System.Drawing.Point(1645, 215);
             pbBotonNuevoProducto.Name = "pbBotonNuevoProducto";
             pbBotonNuevoProducto.Size = new System.Drawing.Size(37, 34);
             pbBotonNuevoProducto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -469,7 +463,6 @@
             pNuevoProducto.Controls.Add(txtNombreNuevoProducto);
             pNuevoProducto.Controls.Add(lblNombreNuevoProducto);
             pNuevoProducto.Controls.Add(lblPrecioNuevoProducto);
-            pNuevoProducto.Controls.Add(lblCaracteristicaNuevoProducto);
             pNuevoProducto.Controls.Add(lblCantidadNuevoProducto);
             pNuevoProducto.Controls.Add(botonAgregarProducto);
             pNuevoProducto.Controls.Add(txtPrecioNuevoProducto);
@@ -747,12 +740,25 @@
             pbBotonEditarProducto.TabStop = false;
             pbBotonEditarProducto.Click += pbBotonEditarProducto_Click;
             // 
+            // pbBotonEliminarProducto
+            // 
+            pbBotonEliminarProducto.Cursor = System.Windows.Forms.Cursors.Hand;
+            pbBotonEliminarProducto.Image = Properties.Resources.Icono_borrar;
+            pbBotonEliminarProducto.Location = new System.Drawing.Point(1215, 223);
+            pbBotonEliminarProducto.Name = "pbBotonEliminarProducto";
+            pbBotonEliminarProducto.Size = new System.Drawing.Size(40, 34);
+            pbBotonEliminarProducto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbBotonEliminarProducto.TabIndex = 117;
+            pbBotonEliminarProducto.TabStop = false;
+            pbBotonEliminarProducto.Click += pbBotonEliminarProducto_Click;
+            // 
             // FormInventario
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Honeydew;
             ClientSize = new System.Drawing.Size(1822, 766);
+            Controls.Add(pbBotonEliminarProducto);
             Controls.Add(pbBotonEditarProducto);
             Controls.Add(pEditarProducto);
             Controls.Add(pNuevoProducto);
@@ -787,6 +793,7 @@
             pEditarProducto.ResumeLayout(false);
             pEditarProducto.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbBotonEditarProducto).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbBotonEliminarProducto).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -798,11 +805,6 @@
         private System.Windows.Forms.Label lblVolverMenu;
         private System.Windows.Forms.Label lblTituloInventario;
         private System.Windows.Forms.DataGridView dgvListaProductos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Tag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Stock;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn caracteristica;
         private System.Windows.Forms.PictureBox pbLogo;
         private System.Windows.Forms.PictureBox pbLogoUsuario;
         private System.Windows.Forms.Label lblNombreVendedor;
@@ -811,13 +813,11 @@
         private System.Windows.Forms.ComboBox cbFiltros;
         private System.Windows.Forms.Label lblFiltro;
         private System.Windows.Forms.Label lblProductos;
-        private System.Windows.Forms.Label lblCaracteristicaNuevoProducto;
         private System.Windows.Forms.Button botonAgregarProducto;
         private System.Windows.Forms.Label lblCategoriaProducto;
         private System.Windows.Forms.ComboBox cbCategoriasProducto;
         private System.Windows.Forms.TextBox txtCantidadNuevoProducto;
         private System.Windows.Forms.TextBox txtPrecioNuevoProducto;
-        private System.Windows.Forms.Label lblCategoriaNuevoProducto;
         private System.Windows.Forms.Label lblCantidadNuevoProducto;
         private System.Windows.Forms.Label lblPrecioNuevoProducto;
         private System.Windows.Forms.Label lblNombreNuevoProducto;
@@ -850,5 +850,11 @@
         private System.Windows.Forms.Label lblSumarCantidad;
         private System.Windows.Forms.Label lblDetallesNuevoProducto;
         private System.Windows.Forms.TextBox txtDetallesNuevoProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Categoria;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Stock;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Detalles;
+        private System.Windows.Forms.PictureBox pbBotonEliminarProducto;
     }
 }

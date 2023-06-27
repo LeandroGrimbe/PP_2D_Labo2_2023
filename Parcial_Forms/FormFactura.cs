@@ -18,6 +18,8 @@ namespace Parcial_Forms
         private string cliente;
         private string metodoPago;
 
+        private double total;
+
         public FormFactura()
         {
             InitializeComponent();
@@ -28,6 +30,8 @@ namespace Parcial_Forms
             this.cliente = cliente;
             this.carrito = new List<Producto>(carrito1);
             this.metodoPago = metodoPago;
+
+            total = 0;
 
             CargaDatos();
             listarProductos();
@@ -41,9 +45,8 @@ namespace Parcial_Forms
             txtNroVenta.Text = Vendedor.numeroOperacion.ToString();
             txtFecha.Text = DateTime.UtcNow.ToString("d");
             txtCliente.Text = cliente;
-
+            txtMetodoPago.Text = metodoPago;
         }
-
 
         /// <summary>
         /// Lista los productos del carrito en la factura, con su precio y cantidad.
@@ -62,15 +65,13 @@ namespace Parcial_Forms
             foreach (Producto p in carrito)
             {
                 dgvProductos.Rows.Add(p.Tipo, p.CantidadKilos, p.PrecioPorKilo * multiplicadorMetodoPago, p.PrecioPorKilo * (double)p.CantidadKilos * multiplicadorMetodoPago);
-
-                productos.Append("  |  ");
-                productos.Append(p.CantidadKilos);
-                productos.Append("kg de ");
-                productos.Append(p.Tipo);
-                productos.Append("  |  ");
+                total += p.PrecioPorKilo * (double)p.CantidadKilos * multiplicadorMetodoPago;
             }
 
-            Vendedor.RegistrarNuevaVenta(productos.ToString(), cliente);
+            RegistroVentas venta = new RegistroVentas(DateTime.UtcNow, cliente, carrito, (decimal)total);
+            RegistroVentas.AgregarVentaAlHistorial(venta);
+
+            txtTotal.Text = total.ToString();
         }
     }
 }

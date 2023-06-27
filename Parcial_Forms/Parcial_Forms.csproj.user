@@ -10,9 +10,6 @@
     <Compile Update="FormFactura.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="FormHistorial.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="FormInventario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -20,6 +17,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormMenuVendedor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="FormProgramador.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormResumenOperacion.cs">
