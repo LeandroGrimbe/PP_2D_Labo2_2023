@@ -102,8 +102,8 @@ namespace Parcial_Biblioteca
             {
                 cliente.DineroDisponible -= totalCompra;
 
-                Programador.ActualizarProductosVentaBDD(carrito, productos);
-                Programador.ActualizarClienteBDD(cliente);
+                ProductoDAO.ActualizarProductosVentaBDD(carrito, productos);
+                UsuarioDAO.ActualizarClienteBDD(cliente);
 
                 compraRealizada = true;
             }

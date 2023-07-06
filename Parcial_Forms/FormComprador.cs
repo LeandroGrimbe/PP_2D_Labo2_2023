@@ -20,6 +20,10 @@ namespace Parcial_Forms
 
         private bool cierreTotal;
 
+        private int segundosTimer;
+        private int minutosTimer;
+        private int horasTimer;
+
         #region Constructores
 
         public FormComprador()
@@ -27,8 +31,12 @@ namespace Parcial_Forms
             InitializeComponent();
         }
 
-        public FormComprador(Cliente cliente, List<Producto> listaProductos) : this()
+        public FormComprador(Cliente cliente, List<Producto> listaProductos, int horas, int minutos, int segundos) : this()
         {
+            segundosTimer = segundos;
+            minutosTimer = minutos;
+            horasTimer = horas;
+
             this.cliente = cliente;
             this.listaProductos = listaProductos;
             this.listaCarrito = new List<Producto>();
@@ -51,8 +59,7 @@ namespace Parcial_Forms
             nudListaProductos.DecimalPlaces = 2;
             nudListaProductos.Increment = 0.1M;
 
-            Task t1 = new Task(ParametrosIniciales);
-            t1.Start();
+            ParametrosIniciales();
 
             configFondoLogo(pbProducto1, pbIconoSinStock1);
             configFondoLogo(pbProducto2, pbIconoSinStock2);
@@ -61,6 +68,21 @@ namespace Parcial_Forms
             configFondoLogo(pbProducto5, pbIconoSinStock5);
 
             txtSubtotalCarrito.Text = "0";
+
+            if (segundosTimer < 10)
+                rtbSegundos.Text = "0" + segundosTimer.ToString();
+            else
+                rtbSegundos.Text = segundosTimer.ToString();
+
+            if (minutosTimer < 10)
+                rtbMinutos.Text = "0" + minutosTimer.ToString();
+            else
+                rtbMinutos.Text = minutosTimer.ToString();
+
+            if (horasTimer < 10)
+                rtbHoras.Text = "0" + horasTimer.ToString();
+            else
+                rtbHoras.Text = horasTimer.ToString();
         }
 
         #endregion
@@ -227,6 +249,55 @@ namespace Parcial_Forms
 
         #region Otras funciones
 
+        private void timerTiempoSesion_Tick(object sender, EventArgs e)
+        {
+            if (segundosTimer < 59)
+            {
+                segundosTimer++;
+                if (segundosTimer < 10)
+                {
+                    rtbSegundos.Text = "0" + segundosTimer.ToString();
+                }
+                else
+                {
+                    rtbSegundos.Text = segundosTimer.ToString();
+                }
+            }
+            else
+            {
+                segundosTimer = 0;
+                rtbSegundos.Text = "00";
+
+                if (minutosTimer < 59)
+                {
+                    minutosTimer++;
+                    if (minutosTimer < 10)
+                    {
+                        rtbMinutos.Text = "0" + minutosTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbMinutos.Text = minutosTimer.ToString();
+                    }
+                }
+                else
+                {
+                    minutosTimer = 0;
+                    rtbMinutos.Text = "00";
+
+                    horasTimer++;
+                    if (horasTimer < 10)
+                    {
+                        rtbHoras.Text = "0" + horasTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbHoras.Text = horasTimer.ToString();
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Actualiza todos los valores mostrados en el forms
         /// </summary>
@@ -365,5 +436,6 @@ namespace Parcial_Forms
         }
 
         #endregion
+
     }
 }

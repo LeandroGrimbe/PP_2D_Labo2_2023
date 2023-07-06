@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Producto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <IdProducto>5</IdProducto>
-  <Categoria>Pollo</Categoria>
-  <Tipo>Pata y Muslo</Tipo>
-  <PrecioPorKilo>800</PrecioPorKilo>
-  <CantidadKilos>16</CantidadKilos>
-  <Descripcion>Con Piel</Descripcion>
-</Producto>

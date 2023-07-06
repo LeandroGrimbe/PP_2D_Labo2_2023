@@ -14,6 +14,8 @@ namespace Parcial_Biblioteca
         protected string claveUsuario;
         protected string rolUsuario;
 
+        #region propiedades
+
         public abstract int IdUsuario
         {
             get;
@@ -35,6 +37,8 @@ namespace Parcial_Biblioteca
         {
             get;
         }
+
+        #endregion
 
         public Usuario()
         {

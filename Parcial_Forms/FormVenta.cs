@@ -20,25 +20,55 @@ namespace Parcial_Forms
 
         private bool cierreTotal;
 
+        private int segundosTimer;
+        private int minutosTimer;
+        private int horasTimer;
+
+        #region Constructores
+
         public FormVenta()
         {
             InitializeComponent();
         }
 
-        public FormVenta(Vendedor vendedor, List<Producto> listaProductos) : this()
+        public FormVenta(Vendedor vendedor, List<Producto> listaProductos, int horas, int minutos, int segundos) : this()
         {
+            segundosTimer = segundos;
+            minutosTimer = minutos;
+            horasTimer = horas;
+
             this.listaProductos = listaProductos;
             this.listaCarrito = new List<Producto>();
 
             this.vendedor = vendedor;
+            lblNombreVendedor.Text = vendedor.NombreUsuario;
+        }
 
+        private void FormVenta_Load(object sender, EventArgs e)
+        {
             nudListaProductos.DecimalPlaces = 2;
             nudListaProductos.Increment = 0.1M;
-            lblNombreVendedor.Text = vendedor.NombreUsuario;
             txtSubtotalCarrito.Text = "0";
+
+            if (segundosTimer < 10)
+                rtbSegundos.Text = "0" + segundosTimer.ToString();
+            else
+                rtbSegundos.Text = segundosTimer.ToString();
+
+            if (minutosTimer < 10)
+                rtbMinutos.Text = "0" + minutosTimer.ToString();
+            else
+                rtbMinutos.Text = minutosTimer.ToString();
+
+            if (horasTimer < 10)
+                rtbHoras.Text = "0" + horasTimer.ToString();
+            else
+                rtbHoras.Text = horasTimer.ToString();
 
             MostrarDatos();
         }
+
+        #endregion
 
         #region Botones Form
 
@@ -159,6 +189,55 @@ namespace Parcial_Forms
 
         #region Otras Funciones
 
+        private void timerTiempoSesion_Tick(object sender, EventArgs e)
+        {
+            if (segundosTimer < 59)
+            {
+                segundosTimer++;
+                if (segundosTimer < 10)
+                {
+                    rtbSegundos.Text = "0" + segundosTimer.ToString();
+                }
+                else
+                {
+                    rtbSegundos.Text = segundosTimer.ToString();
+                }
+            }
+            else
+            {
+                segundosTimer = 0;
+                rtbSegundos.Text = "00";
+
+                if (minutosTimer < 59)
+                {
+                    minutosTimer++;
+                    if (minutosTimer < 10)
+                    {
+                        rtbMinutos.Text = "0" + minutosTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbMinutos.Text = minutosTimer.ToString();
+                    }
+                }
+                else
+                {
+                    minutosTimer = 0;
+                    rtbMinutos.Text = "00";
+
+                    horasTimer++;
+                    if (horasTimer < 10)
+                    {
+                        rtbHoras.Text = "0" + horasTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbHoras.Text = horasTimer.ToString();
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Actualiza el subtotal de la venta segun se va agregando un producto al carrito
         /// </summary>
@@ -206,7 +285,7 @@ namespace Parcial_Forms
             nudListaProductos.Maximum = 0;
             cbFiltros.SelectedIndex = 0;
 
-            this.cierreTotal = true;
+            cierreTotal = true;
         }
 
         #endregion

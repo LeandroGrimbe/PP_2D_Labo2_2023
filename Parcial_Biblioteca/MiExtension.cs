@@ -25,36 +25,35 @@ namespace Parcial_Biblioteca
         }
 
         /// <summary>
-        /// A partir de la categoria recibida como una string, la transformo en su enum equivalente y lo retorno.
+        /// A partir de la categoria recibida como un ID, la transformo en su enum equivalente y lo retorno.
         /// </summary>
-        /// <param name="cadena"></param>
+        /// <param name="idCategoria"></param>
         /// <returns></returns> El enum correspondiente a la categoria del producto.
         /// <exception cref="Exception"></exception>
-        public static ECategoria TransformarAEnum(this string cadena)
+        public static ECategoria TransformarAEnum(this int idCategoria)
         {
             ECategoria categoria = ECategoria.Carne_Vacuna;  //Instancia auxiliar
 
-            switch(cadena)
+            switch(idCategoria)
             {
-                case "Carne Vacuna":
-                case "Carne_Vacuna":
+                case 1:
                     categoria = ECategoria.Carne_Vacuna;
                     break;
 
-                case "Pollo":
+                case 2:
                     categoria = ECategoria.Pollo;
                     break;
 
-                case "Cerdo":
+                case 3:
                     categoria = ECategoria.Cerdo;
                     break;
 
-                case "Achuras":
+                case 4:
                     categoria = ECategoria.Achuras;
                     break;
 
                 default:
-                    throw new Exception("Cadena incompatible");
+                    throw new Exception("Id invalido");
             }
 
             return categoria;

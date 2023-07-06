@@ -15,8 +15,6 @@ namespace Parcial_Forms
         [STAThread]
         static void Main()
         {
-            Vendedor.numeroOperacion = 1;
-
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

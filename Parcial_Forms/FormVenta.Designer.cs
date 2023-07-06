@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -45,6 +46,11 @@
             lblProductos = new System.Windows.Forms.Label();
             lblTituloVentas = new System.Windows.Forms.Label();
             dgvListaProductos = new System.Windows.Forms.DataGridView();
+            Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            Detalles = new System.Windows.Forms.DataGridViewTextBoxColumn();
             txtSubtotalCarrito = new System.Windows.Forms.TextBox();
             lblSubtotalCarrito = new System.Windows.Forms.Label();
             botonFinalizarVenta = new System.Windows.Forms.Button();
@@ -68,11 +74,12 @@
             nudListaProductos = new System.Windows.Forms.NumericUpDown();
             cbProductos = new System.Windows.Forms.ComboBox();
             lblBuscarProductos = new System.Windows.Forms.Label();
-            Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Categoria = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            Detalles = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            timerTiempoSesion = new System.Windows.Forms.Timer(components);
+            pTimer = new System.Windows.Forms.Panel();
+            rtbSegundos = new System.Windows.Forms.RichTextBox();
+            rtbMinutos = new System.Windows.Forms.RichTextBox();
+            rtbHoras = new System.Windows.Forms.RichTextBox();
+            lblTimer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             pUsuario.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbLogoUsuario).BeginInit();
@@ -82,6 +89,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbBotonVolverMenu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudListaProductos).BeginInit();
+            pTimer.SuspendLayout();
             SuspendLayout();
             // 
             // pbLogo
@@ -241,6 +249,42 @@
             dgvListaProductos.Size = new System.Drawing.Size(668, 389);
             dgvListaProductos.TabIndex = 34;
             dgvListaProductos.TabStop = false;
+            // 
+            // Nombre
+            // 
+            Nombre.FillWeight = 185F;
+            Nombre.HeaderText = "Nombre";
+            Nombre.Name = "Nombre";
+            Nombre.ReadOnly = true;
+            // 
+            // Categoria
+            // 
+            Categoria.FillWeight = 90F;
+            Categoria.HeaderText = "Categoria";
+            Categoria.Name = "Categoria";
+            Categoria.ReadOnly = true;
+            // 
+            // Stock
+            // 
+            Stock.FillWeight = 65F;
+            Stock.HeaderText = "Cantidad Disponible";
+            Stock.Name = "Stock";
+            Stock.ReadOnly = true;
+            // 
+            // Precio
+            // 
+            Precio.FillWeight = 70F;
+            Precio.HeaderText = "Precio (x Kg)";
+            Precio.Name = "Precio";
+            Precio.ReadOnly = true;
+            // 
+            // Detalles
+            // 
+            Detalles.FillWeight = 110F;
+            Detalles.HeaderText = "Detalles";
+            Detalles.Name = "Detalles";
+            Detalles.ReadOnly = true;
+            Detalles.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
             // txtSubtotalCarrito
             // 
@@ -491,41 +535,65 @@
             lblBuscarProductos.TabIndex = 78;
             lblBuscarProductos.Text = "Buscar Producto";
             // 
-            // Nombre
+            // timerTiempoSesion
             // 
-            Nombre.FillWeight = 185F;
-            Nombre.HeaderText = "Nombre";
-            Nombre.Name = "Nombre";
-            Nombre.ReadOnly = true;
+            timerTiempoSesion.Enabled = true;
+            timerTiempoSesion.Interval = 1000;
+            timerTiempoSesion.Tick += timerTiempoSesion_Tick;
             // 
-            // Categoria
+            // pTimer
             // 
-            Categoria.FillWeight = 90F;
-            Categoria.HeaderText = "Categoria";
-            Categoria.Name = "Categoria";
-            Categoria.ReadOnly = true;
+            pTimer.BackColor = System.Drawing.Color.White;
+            pTimer.Controls.Add(rtbSegundos);
+            pTimer.Controls.Add(rtbMinutos);
+            pTimer.Controls.Add(rtbHoras);
+            pTimer.Controls.Add(lblTimer);
+            pTimer.Location = new System.Drawing.Point(1048, 0);
+            pTimer.Name = "pTimer";
+            pTimer.Size = new System.Drawing.Size(120, 53);
+            pTimer.TabIndex = 87;
             // 
-            // Stock
+            // rtbSegundos
             // 
-            Stock.FillWeight = 65F;
-            Stock.HeaderText = "Cantidad Disponible";
-            Stock.Name = "Stock";
-            Stock.ReadOnly = true;
+            rtbSegundos.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbSegundos.Location = new System.Drawing.Point(82, 18);
+            rtbSegundos.Name = "rtbSegundos";
+            rtbSegundos.ReadOnly = true;
+            rtbSegundos.Size = new System.Drawing.Size(39, 35);
+            rtbSegundos.TabIndex = 90;
+            rtbSegundos.Text = "";
             // 
-            // Precio
+            // rtbMinutos
             // 
-            Precio.FillWeight = 70F;
-            Precio.HeaderText = "Precio (x Kg)";
-            Precio.Name = "Precio";
-            Precio.ReadOnly = true;
+            rtbMinutos.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbMinutos.Location = new System.Drawing.Point(41, 18);
+            rtbMinutos.Name = "rtbMinutos";
+            rtbMinutos.ReadOnly = true;
+            rtbMinutos.Size = new System.Drawing.Size(39, 35);
+            rtbMinutos.TabIndex = 89;
+            rtbMinutos.Text = "";
             // 
-            // Detalles
+            // rtbHoras
             // 
-            Detalles.FillWeight = 110F;
-            Detalles.HeaderText = "Detalles";
-            Detalles.Name = "Detalles";
-            Detalles.ReadOnly = true;
-            Detalles.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            rtbHoras.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbHoras.Location = new System.Drawing.Point(0, 18);
+            rtbHoras.Name = "rtbHoras";
+            rtbHoras.ReadOnly = true;
+            rtbHoras.Size = new System.Drawing.Size(39, 35);
+            rtbHoras.TabIndex = 88;
+            rtbHoras.Text = "";
+            // 
+            // lblTimer
+            // 
+            lblTimer.AutoSize = true;
+            lblTimer.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            lblTimer.Font = new System.Drawing.Font("Sitka Display", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            lblTimer.ForeColor = System.Drawing.Color.Cornsilk;
+            lblTimer.Location = new System.Drawing.Point(0, -4);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Size = new System.Drawing.Size(121, 23);
+            lblTimer.TabIndex = 88;
+            lblTimer.Text = "Tiempo en sesion";
             // 
             // FormVenta
             // 
@@ -533,6 +601,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Honeydew;
             ClientSize = new System.Drawing.Size(1365, 762);
+            Controls.Add(pTimer);
             Controls.Add(txtPrecioProducto);
             Controls.Add(lblPrecioProducto);
             Controls.Add(txtCantidadProductoElegido);
@@ -565,6 +634,7 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "FormVenta";
             FormClosing += FormVenta_Closing;
+            Load += FormVenta_Load;
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             pUsuario.ResumeLayout(false);
             pUsuario.PerformLayout();
@@ -575,6 +645,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvCarrito).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbBotonVolverMenu).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudListaProductos).EndInit();
+            pTimer.ResumeLayout(false);
+            pTimer.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -619,5 +691,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Stock;
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
         private System.Windows.Forms.DataGridViewTextBoxColumn Detalles;
+        private System.Windows.Forms.Timer timerTiempoSesion;
+        private System.Windows.Forms.Panel pTimer;
+        private System.Windows.Forms.RichTextBox rtbHoras;
+        private System.Windows.Forms.Label lblTimer;
+        private System.Windows.Forms.RichTextBox rtbSegundos;
+        private System.Windows.Forms.RichTextBox rtbMinutos;
     }
 }

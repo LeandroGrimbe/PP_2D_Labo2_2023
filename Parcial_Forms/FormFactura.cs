@@ -32,6 +32,7 @@ namespace Parcial_Forms
             this.metodoPago = metodoPago;
 
             total = 0;
+            Vendedor.numeroOperacion++;
 
             CargaDatos();
             listarProductos();

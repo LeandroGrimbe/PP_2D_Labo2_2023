@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -90,6 +91,12 @@
             txtCantidadActual = new System.Windows.Forms.TextBox();
             pbBotonEditarProducto = new System.Windows.Forms.PictureBox();
             pbBotonEliminarProducto = new System.Windows.Forms.PictureBox();
+            pTimer = new System.Windows.Forms.Panel();
+            rtbSegundos = new System.Windows.Forms.RichTextBox();
+            rtbMinutos = new System.Windows.Forms.RichTextBox();
+            rtbHoras = new System.Windows.Forms.RichTextBox();
+            lblTimer = new System.Windows.Forms.Label();
+            timerTiempoSesion = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pbBotonVolverMenu).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvListaProductos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
@@ -100,6 +107,7 @@
             pEditarProducto.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbBotonEditarProducto).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbBotonEliminarProducto).BeginInit();
+            pTimer.SuspendLayout();
             SuspendLayout();
             // 
             // cbProductos
@@ -752,12 +760,73 @@
             pbBotonEliminarProducto.TabStop = false;
             pbBotonEliminarProducto.Click += pbBotonEliminarProducto_Click;
             // 
+            // pTimer
+            // 
+            pTimer.BackColor = System.Drawing.Color.White;
+            pTimer.Controls.Add(rtbSegundos);
+            pTimer.Controls.Add(rtbMinutos);
+            pTimer.Controls.Add(rtbHoras);
+            pTimer.Controls.Add(lblTimer);
+            pTimer.Location = new System.Drawing.Point(1506, 1);
+            pTimer.Name = "pTimer";
+            pTimer.Size = new System.Drawing.Size(120, 53);
+            pTimer.TabIndex = 118;
+            // 
+            // rtbSegundos
+            // 
+            rtbSegundos.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbSegundos.Location = new System.Drawing.Point(82, 18);
+            rtbSegundos.Name = "rtbSegundos";
+            rtbSegundos.ReadOnly = true;
+            rtbSegundos.Size = new System.Drawing.Size(39, 35);
+            rtbSegundos.TabIndex = 90;
+            rtbSegundos.Text = "";
+            // 
+            // rtbMinutos
+            // 
+            rtbMinutos.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbMinutos.Location = new System.Drawing.Point(41, 18);
+            rtbMinutos.Name = "rtbMinutos";
+            rtbMinutos.ReadOnly = true;
+            rtbMinutos.Size = new System.Drawing.Size(39, 35);
+            rtbMinutos.TabIndex = 89;
+            rtbMinutos.Text = "";
+            // 
+            // rtbHoras
+            // 
+            rtbHoras.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbHoras.Location = new System.Drawing.Point(0, 18);
+            rtbHoras.Name = "rtbHoras";
+            rtbHoras.ReadOnly = true;
+            rtbHoras.Size = new System.Drawing.Size(39, 35);
+            rtbHoras.TabIndex = 88;
+            rtbHoras.Text = "";
+            // 
+            // lblTimer
+            // 
+            lblTimer.AutoSize = true;
+            lblTimer.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            lblTimer.Font = new System.Drawing.Font("Sitka Display", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            lblTimer.ForeColor = System.Drawing.Color.Cornsilk;
+            lblTimer.Location = new System.Drawing.Point(0, -4);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Size = new System.Drawing.Size(121, 23);
+            lblTimer.TabIndex = 88;
+            lblTimer.Text = "Tiempo en sesion";
+            // 
+            // timerTiempoSesion
+            // 
+            timerTiempoSesion.Enabled = true;
+            timerTiempoSesion.Interval = 1000;
+            timerTiempoSesion.Tick += timerTiempoSesion_Tick;
+            // 
             // FormInventario
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Honeydew;
             ClientSize = new System.Drawing.Size(1822, 766);
+            Controls.Add(pTimer);
             Controls.Add(pbBotonEliminarProducto);
             Controls.Add(pbBotonEditarProducto);
             Controls.Add(pEditarProducto);
@@ -781,6 +850,7 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "FormInventario";
             FormClosing += FormInventario_Closing;
+            Load += FormInventario_Load;
             ((System.ComponentModel.ISupportInitialize)pbBotonVolverMenu).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvListaProductos).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
@@ -794,6 +864,8 @@
             pEditarProducto.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbBotonEditarProducto).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbBotonEliminarProducto).EndInit();
+            pTimer.ResumeLayout(false);
+            pTimer.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -856,5 +928,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
         private System.Windows.Forms.DataGridViewTextBoxColumn Detalles;
         private System.Windows.Forms.PictureBox pbBotonEliminarProducto;
+        private System.Windows.Forms.Panel pTimer;
+        private System.Windows.Forms.RichTextBox rtbSegundos;
+        private System.Windows.Forms.RichTextBox rtbMinutos;
+        private System.Windows.Forms.RichTextBox rtbHoras;
+        private System.Windows.Forms.Label lblTimer;
+        private System.Windows.Forms.Timer timerTiempoSesion;
     }
 }

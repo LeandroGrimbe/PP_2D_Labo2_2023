@@ -49,8 +49,6 @@ namespace Parcial_Biblioteca
             this.nombreCliente = nombreCliente;
             this.productosOperacion = productosOperacion;
             this.importeOperacion = importeOperacion;
-
-            historialVentas = "";
         }
 
         /// <summary>

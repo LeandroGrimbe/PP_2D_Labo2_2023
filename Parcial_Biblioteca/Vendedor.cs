@@ -41,8 +41,10 @@ namespace Parcial_Biblioteca
             get { return this.rolUsuario; }
         }
 
-        #endregion 
-        
+        #endregion
+
+        #region Constructores
+
         public Vendedor() : base()
         {
         }
@@ -51,6 +53,8 @@ namespace Parcial_Biblioteca
         {
             listaClientes = new List<Cliente>();
         }
+
+        #endregion
 
         /// <summary>
         /// Genera un mensaje de bienvenida luego de loguearse con el vendedor
@@ -83,8 +87,8 @@ namespace Parcial_Biblioteca
             {
                 cliente.DineroDisponible -= montoVenta;
 
-                Programador.ActualizarProductosVentaBDD(carrito, productos);
-                Programador.ActualizarClienteBDD(cliente);
+                ProductoDAO.ActualizarProductosVentaBDD(carrito, productos);
+                UsuarioDAO.ActualizarClienteBDD(cliente);
 
                 ventaConfirmada = true;
             }
@@ -133,7 +137,6 @@ namespace Parcial_Biblioteca
             }
             else
             {
-                categoriaProducto = categoria.TransformarAEnum();
                 switch (categoria)
                 {
                     case "Carne_Vacuna":
@@ -209,10 +212,10 @@ namespace Parcial_Biblioteca
 
                 if (!productoEncontrado)
                 {
-                    Producto productoNuevo = new Producto(Programador.ultimoIdRegistrado+1, categoriaProducto, corte, precio, cantidadProducto, detalles);
+                    Producto productoNuevo = new Producto(ProductoDAO.ultimoIdRegistrado+1, categoriaProducto, corte, precio, cantidadProducto, detalles);
                     listaProductos.Add(productoNuevo);
-                    Programador.CrearProductoBDD(productoNuevo, idCategoria);
-                    Programador.ultimoIdRegistrado++;
+                    ProductoDAO.CrearProductoBDD(productoNuevo, idCategoria);
+                    ProductoDAO.ultimoIdRegistrado++;
 
                     mensajeFinal = "Producto Agregado con Exito";
                 }
@@ -307,7 +310,7 @@ namespace Parcial_Biblioteca
                 mensaje.AppendLine("-Detalles cambiados con exito");
             }
 
-            Programador.ModificarProductoBDD(producto, cambioCategoria, idCategoriaNueva, cambioCantidad, cambioPrecio, cambioDetalles);
+            ProductoDAO.ModificarProductoBDD(producto, cambioCategoria, idCategoriaNueva, cambioCantidad, cambioPrecio, cambioDetalles);
             
             return mensaje.ToString();
         }

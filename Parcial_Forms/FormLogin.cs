@@ -27,10 +27,6 @@ namespace Parcial_Forms
             this.listaProductos = new List<Producto>();
         }
 
-        #endregion
-
-        #region Otras Funciones
-
         /// <summary>
         /// Utilizo hilos para cargar todas las cosas del forms mas rapidamente.
         /// </summary>
@@ -41,17 +37,25 @@ namespace Parcial_Forms
             Task t1 = new Task(CargaLista);
             t1.Start();
 
+            Vendedor.numeroOperacion = 0;
+            RegistroVentas.historialVentas = "";
+
             ParametrosIniciales();
         }
+
+        #endregion
+
+        #region Otras Funciones
 
         /// <summary>
         /// Traigo los productos cargados en la base de datos, y los agrego a la lista. Ademas, le asigno a cada producto un evento de control de stock.
         /// </summary>
         private void CargaLista()
         {
+            ProductoDAO controlProductos = new ProductoDAO();
             try
             {
-                Programador.CargarProductosBDD(this.listaProductos);
+                controlProductos.TraerDatosBDD(this.listaProductos);
             }
             catch (Exception ex)
             {
@@ -108,7 +112,7 @@ namespace Parcial_Forms
 
                 try
                 {
-                    Usuario usuario = Programador.BuscarUsuarioBDD(ref tipoUsuario, mail, clave);
+                    Usuario usuario = UsuarioDAO.BuscarUsuarioBDD(ref tipoUsuario, mail, clave);
 
                     switch (tipoUsuario)
                     {
@@ -203,7 +207,7 @@ namespace Parcial_Forms
 
             try
             {
-                Programador.AutoCompletarDatosBDD(idUsuario, ref mail, ref clave);
+                UsuarioDAO.AutoCompletarDatosBDD(idUsuario, ref mail, ref clave);
             }
             catch (Exception excepcion)
             {

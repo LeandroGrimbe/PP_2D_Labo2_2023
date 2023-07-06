@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pbLogo = new System.Windows.Forms.PictureBox();
             lblSaludo = new System.Windows.Forms.Label();
             lblNombreCliente = new System.Windows.Forms.Label();
@@ -37,9 +38,16 @@
             botonDinero = new System.Windows.Forms.Button();
             pbVolver = new System.Windows.Forms.PictureBox();
             lblVolver = new System.Windows.Forms.Label();
+            pTimer = new System.Windows.Forms.Panel();
+            rtbSegundos = new System.Windows.Forms.RichTextBox();
+            rtbMinutos = new System.Windows.Forms.RichTextBox();
+            rtbHoras = new System.Windows.Forms.RichTextBox();
+            lblTimer = new System.Windows.Forms.Label();
+            timerTiempoSesion = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pbLogo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbDinero).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbVolver).BeginInit();
+            pTimer.SuspendLayout();
             SuspendLayout();
             // 
             // pbLogo
@@ -120,7 +128,7 @@
             // 
             pbVolver.Cursor = System.Windows.Forms.Cursors.Hand;
             pbVolver.Image = Properties.Resources.Icono_volver;
-            pbVolver.Location = new System.Drawing.Point(442, 8);
+            pbVolver.Location = new System.Drawing.Point(106, 1);
             pbVolver.Name = "pbVolver";
             pbVolver.Size = new System.Drawing.Size(19, 19);
             pbVolver.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -134,11 +142,71 @@
             lblVolver.BackColor = System.Drawing.Color.Gainsboro;
             lblVolver.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             lblVolver.ForeColor = System.Drawing.SystemColors.ControlText;
-            lblVolver.Location = new System.Drawing.Point(465, 9);
+            lblVolver.Location = new System.Drawing.Point(129, 2);
             lblVolver.Name = "lblVolver";
             lblVolver.Size = new System.Drawing.Size(48, 18);
             lblVolver.TabIndex = 8;
             lblVolver.Text = "Volver";
+            // 
+            // pTimer
+            // 
+            pTimer.BackColor = System.Drawing.Color.White;
+            pTimer.Controls.Add(rtbSegundos);
+            pTimer.Controls.Add(rtbMinutos);
+            pTimer.Controls.Add(rtbHoras);
+            pTimer.Controls.Add(lblTimer);
+            pTimer.Location = new System.Drawing.Point(398, 0);
+            pTimer.Name = "pTimer";
+            pTimer.Size = new System.Drawing.Size(120, 53);
+            pTimer.TabIndex = 88;
+            // 
+            // rtbSegundos
+            // 
+            rtbSegundos.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbSegundos.Location = new System.Drawing.Point(82, 18);
+            rtbSegundos.Name = "rtbSegundos";
+            rtbSegundos.ReadOnly = true;
+            rtbSegundos.Size = new System.Drawing.Size(39, 35);
+            rtbSegundos.TabIndex = 90;
+            rtbSegundos.Text = "";
+            // 
+            // rtbMinutos
+            // 
+            rtbMinutos.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbMinutos.Location = new System.Drawing.Point(41, 18);
+            rtbMinutos.Name = "rtbMinutos";
+            rtbMinutos.ReadOnly = true;
+            rtbMinutos.Size = new System.Drawing.Size(39, 35);
+            rtbMinutos.TabIndex = 89;
+            rtbMinutos.Text = "";
+            // 
+            // rtbHoras
+            // 
+            rtbHoras.Font = new System.Drawing.Font("Stencil", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            rtbHoras.Location = new System.Drawing.Point(0, 18);
+            rtbHoras.Name = "rtbHoras";
+            rtbHoras.ReadOnly = true;
+            rtbHoras.Size = new System.Drawing.Size(39, 35);
+            rtbHoras.TabIndex = 88;
+            rtbHoras.Text = "";
+            // 
+            // lblTimer
+            // 
+            lblTimer.AutoSize = true;
+            lblTimer.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            lblTimer.Font = new System.Drawing.Font("Sitka Display", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            lblTimer.ForeColor = System.Drawing.Color.Cornsilk;
+            lblTimer.Location = new System.Drawing.Point(0, -4);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Size = new System.Drawing.Size(121, 23);
+            lblTimer.TabIndex = 88;
+            lblTimer.Text = "Tiempo en sesion";
+            // 
+            // timerTiempoSesion
+            // 
+            timerTiempoSesion.Enabled = true;
+            timerTiempoSesion.Interval = 1000;
+            timerTiempoSesion.Tick += timerTiempoSesion_Tick;
             // 
             // FormDineroCliente
             // 
@@ -146,6 +214,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Cornsilk;
             ClientSize = new System.Drawing.Size(516, 328);
+            Controls.Add(pTimer);
             Controls.Add(lblVolver);
             Controls.Add(pbVolver);
             Controls.Add(botonDinero);
@@ -160,9 +229,12 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Carniceria Carlitos";
             FormClosing += FormDineroCliente_Closing;
+            Load += FormDineroCliente_Load;
             ((System.ComponentModel.ISupportInitialize)pbLogo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbDinero).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbVolver).EndInit();
+            pTimer.ResumeLayout(false);
+            pTimer.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -178,5 +250,11 @@
         private System.Windows.Forms.Button botonDinero;
         private System.Windows.Forms.PictureBox pbVolver;
         private System.Windows.Forms.Label lblVolver;
+        private System.Windows.Forms.Panel pTimer;
+        private System.Windows.Forms.RichTextBox rtbSegundos;
+        private System.Windows.Forms.RichTextBox rtbMinutos;
+        private System.Windows.Forms.RichTextBox rtbHoras;
+        private System.Windows.Forms.Label lblTimer;
+        private System.Windows.Forms.Timer timerTiempoSesion;
     }
 }

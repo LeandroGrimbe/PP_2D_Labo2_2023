@@ -18,6 +18,10 @@ namespace Parcial_Forms
 
         private bool cierreTotal;
 
+        private int segundosTimer;
+        private int minutosTimer;
+        private int horasTimer;
+
         #region constructores
 
         public FormMenuVendedor()
@@ -34,7 +38,64 @@ namespace Parcial_Forms
             lblNombreVendedor.Text = vendedor.NombreUsuario;
         }
 
+        private void FormMenuVendedor_Load(object sender, EventArgs e)
+        {
+            segundosTimer = 0;
+            minutosTimer = 0;
+            horasTimer = 0;
+            rtbHoras.Text = rtbMinutos.Text = rtbSegundos.Text = "00";
+        }
+
         #endregion
+
+        private void timerTiempoSesion_Tick(object sender, EventArgs e)
+        {
+            if (segundosTimer < 59)
+            {
+                segundosTimer++;
+                if (segundosTimer < 10)
+                {
+                    rtbSegundos.Text = "0" + segundosTimer.ToString();
+                }
+                else
+                {
+                    rtbSegundos.Text = segundosTimer.ToString();
+                }
+            }
+            else
+            {
+                segundosTimer = 0;
+                rtbSegundos.Text = "00";
+
+                if (minutosTimer < 59)
+                {
+                    minutosTimer++;
+                    if (minutosTimer < 10)
+                    {
+                        rtbMinutos.Text = "0" + minutosTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbMinutos.Text = minutosTimer.ToString();
+                    }
+                }
+                else
+                {
+                    minutosTimer = 0;
+                    rtbMinutos.Text = "00";
+
+                    horasTimer++;
+                    if (horasTimer < 10)
+                    {
+                        rtbHoras.Text = "0" + horasTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbHoras.Text = horasTimer.ToString();
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Abre el form de ventas y oculta este form
@@ -43,7 +104,7 @@ namespace Parcial_Forms
         /// <param name="e"></param>
         private void botonVentas_Click(object sender, EventArgs e)
         {
-            FormVenta formVenta = new FormVenta(vendedor, listaProductos);
+            FormVenta formVenta = new FormVenta(vendedor, listaProductos, horasTimer, minutosTimer, segundosTimer);
 
             this.Hide();
 
@@ -67,7 +128,7 @@ namespace Parcial_Forms
 
         private void botonInventario_Click(object sender, EventArgs e)
         {
-            FormInventario formInventario = new FormInventario(vendedor, listaProductos);
+            FormInventario formInventario = new FormInventario(vendedor, listaProductos, horasTimer, minutosTimer, segundosTimer);
 
             this.Hide();
 

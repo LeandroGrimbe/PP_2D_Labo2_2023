@@ -61,7 +61,7 @@ namespace Parcial_Biblioteca
                     cantidadKilos = value; 
                 if (value == 0)
                 {
-                    EventoSinStock.Invoke("Sin Stock del producto: " + this.tipo);
+                    EventoSinStock.Invoke("Se ha agregado al carrito todo el stock disponible de: " + this.tipo);
                 }
             }
         }
@@ -72,6 +72,8 @@ namespace Parcial_Biblioteca
         }
 
         #endregion
+
+        #region Constructores
 
         public Producto()
         {
@@ -86,6 +88,8 @@ namespace Parcial_Biblioteca
             this.cantidadKilos = cantidadKilos;
             this.descripcion = descripcion;
         }
+
+        #endregion
 
         /// <summary>
         /// Genera un string con los datos del producto, para mostrar en el form de compra

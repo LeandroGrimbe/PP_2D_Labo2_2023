@@ -74,6 +74,7 @@
             txtFecha.ReadOnly = true;
             txtFecha.Size = new System.Drawing.Size(140, 16);
             txtFecha.TabIndex = 6;
+            txtFecha.TabStop = false;
             // 
             // txtNroVenta
             // 
@@ -167,6 +168,7 @@
             txtCliente.ReadOnly = true;
             txtCliente.Size = new System.Drawing.Size(116, 24);
             txtCliente.TabIndex = 9;
+            txtCliente.TabStop = false;
             // 
             // txtMetodoPago
             // 
@@ -178,6 +180,7 @@
             txtMetodoPago.ReadOnly = true;
             txtMetodoPago.Size = new System.Drawing.Size(159, 24);
             txtMetodoPago.TabIndex = 10;
+            txtMetodoPago.TabStop = false;
             // 
             // txtTotal
             // 
@@ -189,6 +192,7 @@
             txtTotal.ReadOnly = true;
             txtTotal.Size = new System.Drawing.Size(115, 24);
             txtTotal.TabIndex = 11;
+            txtTotal.TabStop = false;
             // 
             // FormFactura
             // 

@@ -18,19 +18,94 @@ namespace Parcial_Forms
 
         private bool cierreTotal;
 
+        private int segundosTimer;
+        private int minutosTimer;
+        private int horasTimer;
+
         public FormInventario()
         {
             InitializeComponent();
         }
 
-        public FormInventario(Vendedor vendedor, List<Producto> listaProductos) : this()
+        public FormInventario(Vendedor vendedor, List<Producto> listaProductos, int horas, int minutos, int segundos) : this()
         {
+            segundosTimer = segundos;
+            minutosTimer = minutos;
+            horasTimer = horas;
+
             this.vendedor = vendedor;
             this.listaProductos = listaProductos;
 
             this.lblNombreVendedor.Text = vendedor.NombreUsuario;
+        }
+
+        private void FormInventario_Load(object sender, EventArgs e)
+        {
+            if (segundosTimer < 10)
+                rtbSegundos.Text = "0" + segundosTimer.ToString();
+            else
+                rtbSegundos.Text = segundosTimer.ToString();
+
+            if (minutosTimer < 10)
+                rtbMinutos.Text = "0" + minutosTimer.ToString();
+            else
+                rtbMinutos.Text = minutosTimer.ToString();
+
+            if (horasTimer < 10)
+                rtbHoras.Text = "0" + horasTimer.ToString();
+            else
+                rtbHoras.Text = horasTimer.ToString();
 
             MostrarDatos();
+        }
+
+        private void timerTiempoSesion_Tick(object sender, EventArgs e)
+        {
+            if (segundosTimer < 59)
+            {
+                segundosTimer++;
+                if (segundosTimer < 10)
+                {
+                    rtbSegundos.Text = "0" + segundosTimer.ToString();
+                }
+                else
+                {
+                    rtbSegundos.Text = segundosTimer.ToString();
+                }
+            }
+            else
+            {
+                segundosTimer = 0;
+                rtbSegundos.Text = "00";
+
+                if (minutosTimer < 59)
+                {
+                    minutosTimer++;
+                    if (minutosTimer < 10)
+                    {
+                        rtbMinutos.Text = "0" + minutosTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbMinutos.Text = minutosTimer.ToString();
+                    }
+                }
+                else
+                {
+                    minutosTimer = 0;
+                    rtbMinutos.Text = "00";
+
+                    horasTimer++;
+                    if (horasTimer < 10)
+                    {
+                        rtbHoras.Text = "0" + horasTimer.ToString();
+                    }
+                    else
+                    {
+                        rtbHoras.Text = horasTimer.ToString();
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -167,7 +242,7 @@ namespace Parcial_Forms
 
                     try
                     {
-                        Programador.BorrarProductoBDD(idABorrar);
+                        ProductoDAO.BorrarProductoBDD(idABorrar);
                         MessageBox.Show("Producto borrado con exito", "Borrado", MessageBoxButtons.OK);
                     }
                     catch (Exception ex)
